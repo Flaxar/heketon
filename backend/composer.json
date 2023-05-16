@@ -1,0 +1,12 @@
+{
+    "require": {
+        "workerman/workerman": "^4.1",
+        "cycle/orm": "^2.3",
+        "cycle/annotated": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
