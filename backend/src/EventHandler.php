@@ -22,16 +22,16 @@ class EventHandler
 
     public function handleIncomming(ConnectionInterface $connection, string $data): void
     {
-        $handler = $this->getHandler($connection, $data);
+        $handler = $this->getHandler($data);
         if ($handler === null) {
-            $connection->send(json_encode(['status' => 0, 'error' => 'Invalid type']));
+            $connection->send(json_encode(['status' => 0, 'error' => 'Invalid data']));
             return;
         }
 
         [$handler, $message] = $handler;
         try {
             $handler->handle($connection, $message, $this->connections);
-        } catch (\Throwable $e) {
+        } catch (SkillIssue $e) {
             $connection->send(json_encode(['status' => 0, 'error' => $e->getMessage()]));
         }
     }
@@ -39,13 +39,17 @@ class EventHandler
     public function handleConnection(ConnectionInterface $connection): void
     {
         // fido time
-        $token = random_bytes(128);
+        $token = sha1(random_bytes(1024));
         $this->connections[$token] = null;
+        $connection->token = $token;
     }
 
     public function getHandler(string $data): ?array
     {
         $message = json_decode($data, true);
+        if (!$message) {
+            return null;
+        }
         $type = $message['type'];
         if (!isset($this->handlers[$type])) {
             return null;
@@ -65,15 +69,15 @@ class EventHandler
             $state = true;
         }
 
-        if (!isset($message['token'])) {
+        if (!isset($connection->token)) {
             $state = false;
         }
 
-        if (!isset($this->connections[$message['token']])) {
+        if (!isset($this->connections[$connection->token])) {
             $state = false;
         }
 
-        if ($this->connections[$message['token']] === null) {
+        if ($this->connections[$connections->token] === null) {
             $state = false;
         }
 

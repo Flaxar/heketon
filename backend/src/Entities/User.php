@@ -21,8 +21,8 @@ class User
         public string $name,
         #[Column(type: 'string')]
         public string $password,
-        #[Column(type: 'bool')]
-        public bool $admin,
+        #[Column(type: 'boolean')]
+        public int $admin,
     ) {
 
     }

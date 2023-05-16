@@ -6,7 +6,7 @@ use App\Entities\Unit;
 use App\Entities\User;
 use App\Message;
 use App\ORM;
-use Exception;
+use App\SkillIssue;
 use Workerman\Connection\ConnectionInterface;
 
 class AuthHandler implements Handler
@@ -23,25 +23,25 @@ class AuthHandler implements Handler
         (match($as) {
             'user' => $this->handleUserConnection(...),
             'unit' => $this->handleUnitConnection(...),
-            default => throw new Exception('no tak ses asi kokot nebo jak to vidis'),
+            default => throw new SkillIssue('no tak ses asi kokot nebo jak to vidis'),
         })($connection, $message, $connections);
     }
 
     public function handleUserConnection(ConnectionInterface $connection, Message $message, array &$connections): void
     {
-        $token = $message->get('token');
-        if (!isset($connections[$token])) {
-            throw new Exception('Invalid token');
+        $token = $connection->token;
+        if (!array_key_exists($token, $connections)) {
+            throw new SkillIssue('Invalid token');
         }
 
         $user = $this->orm->getORM()->getRepository(User::class)->findOne(['name' => $message->get('name')]);
 
         if ($user === null) {
-            throw new Exception('Invalid name');
+            throw new SkillIssue('Invalid name');
         }
 
         if (!password_verify($message->get('password'), $user->password)) {
-            throw new Exception('Invalid password');
+            throw new SkillIssue('Invalid password');
         }
 
         $connections[$token] = $user;
@@ -52,17 +52,17 @@ class AuthHandler implements Handler
     {
          $token = $message->get('token');
         if (!isset($connections[$token])) {
-            throw new Exception('Invalid token');
+            throw new SkillIssue('Invalid token');
         }
 
         $unit = $this->orm->getORM()->getRepository(Unit::class)->findByPK($message->get('id'));
 
         if ($unit === null) {
-            throw new Exception('Invalid id');
+            throw new SkillIssue('Invalid id');
         }
 
         if (!password_verify($message->get('password'), $unit->password)) {
-            throw new Exception('Invalid password');
+            throw new SkillIssue('Invalid password');
         }
 
         /*

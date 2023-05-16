@@ -3,7 +3,7 @@
 namespace App;
 
 use Cycle\ORM\ORM;
-use Illuminate\Contracts\Container\Container;
+use Illuminate\Container\Container;
 use Workerman\Worker;
 
 class App
@@ -12,18 +12,23 @@ class App
 
     public function __construct(
         public Config $config,
-        public string $basePath
     ) {
         $this->container = new Container();
         $this->container->bind(App::class, fn() => $this);
+        $this->container->bind(Config::class, fn() => $this->config);
         $this->container->singleton(ORM::class);
+        $this->container->singleton(EventHandler::class);
     }
 
     public function boot(): void
     {
-        $host = sprintf('ws://%s:%d', $this->config->host, $this->config->port);
+        $host = sprintf('websocket://%s:%d', $this->config->host, $this->config->port);
         $worker = new Worker($host);
+
+        $worker->onConnect = $this->container->make(EventHandler::class)->handleConnection(...);
+
+        $worker->onMessage = $this->container->make(EventHandler::class)->handleIncomming(...); 
     
-        $worker->runAll();
+        Worker::runAll();
     }
 }
