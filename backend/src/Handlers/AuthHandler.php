@@ -11,7 +11,12 @@ class AuthHandler implements Handler
 
     }
 
-    public function handleReadConnection(ConnectionInterface $connection, array $message, array &$connections): void
+    public function handleUserConnection(ConnectionInterface $connection, array $message, array &$connections): void
+    {
+         
+    }
+
+    public function handleUnitConnection(ConnectionInterface $connection, array $message, array &$connections): void
     {
          
     }
