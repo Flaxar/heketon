@@ -1,7 +1,7 @@
 # Heketon
+Software for monitoring energy usage in office buildings. 
 
-- imagine chodit na Gvid -> Gymnázium Brno, Vídeňská, příspěvková organizace
-
-## Instalace
-
-- pls ne
+## Parts
+- Frontend: 
+- Backend: 
+- Hardware: Klimatizace, Žárovky, Topení, Otevřená okna, ...
