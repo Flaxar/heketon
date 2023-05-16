@@ -2,14 +2,21 @@
 
 namespace App;
 
+use Cycle\ORM\ORM;
+use Illuminate\Contracts\Container\Container;
 use Workerman\Worker;
 
 class App
 {
-    public function __construct(
-        public Config $config
-    ) {
+    private Container $container;
 
+    public function __construct(
+        public Config $config,
+        public string $basePath
+    ) {
+        $this->container = new Container();
+        $this->container->bind(App::class, fn() => $this);
+        $this->container->singleton(ORM::class);
     }
 
     public function boot(): void

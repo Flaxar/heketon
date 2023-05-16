@@ -1,6 +1,7 @@
 <?php
 
 use App\Config;
+use App\Env;
 use Cycle\Database\Config as CycleConfig;
 
 return new Config(
@@ -14,10 +15,11 @@ return new Config(
         'connections' => [
             'sqlite' => new CycleConfig\SQLiteDriverConfig(
                 connection: new CycleConfig\SQLite\FileConnectionConfig(
-                    database: getenv('DB_FILE'),
+                    database: Env::get('DB_FILE'),
                 ),
                 queryCache: true,
             ),
         ],
-    ]
+    ],
+    debug: Env::get('DEBUG'),
 );

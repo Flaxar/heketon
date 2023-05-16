@@ -34,7 +34,7 @@ class ORM
 
         AnnotationRegistry::registerLoader('class_exists');
 
-        $schema = (new Schema\Compiler())->compile(new Schema\Registry($this->dbal), [
+        $modules = [
             new Schema\Generator\ResetTables(),
             new Annotated\Embeddings($locator),
             new Annotated\Entities($locator),
@@ -47,9 +47,14 @@ class ORM
             new Schema\Generator\RenderRelations(),
             new Schema\Generator\RenderModifiers(),
             new Annotated\MergeIndexes(),
-            $env->get('DEBUG', false) ? new Schema\Generator\SyncTables() : null,
             new Schema\Generator\GenerateTypecast(),
-        ]);
+        ];
+
+        if ($config->debug) {
+            $modules[] = new Schema\Generator\SyncTables();
+        }
+
+        $schema = (new Schema\Compiler())->compile(new Schema\Registry($this->dbal), $modules);
 
         $this->orm = new CycleORM(new Factory($this->dbal), new ORMSchema($schema));
         $this->manager = new EntityManager($this->orm);
