@@ -13,17 +13,6 @@ First, we need to specify our action, we can either read, write or authorize. We
 }
 ```
 
-When you connect, you receive token, this token **must** be part of every message as `token`
-
-Meaning, that this must be in every message:
-
-```json
-{
-    'type': '...',
-    'token': '...',
-}
-```
-
 ### Auth
 
 In order to authenticate, you need to specify, if you are unit or user. You do that using parameter `as`.
@@ -37,7 +26,6 @@ If you are unit, you need to send your id and password. That will be findable at
 ```json
 {
     'type': 'auth',
-    'token': '...',
     'as': 'unit',
     'id': '37',
     'password': 'parkovar'
@@ -51,11 +39,13 @@ If you are user, you need to send your name and password
 ```json
 {
     'type': 'auth',
-    'token': '...',
     'as': 'user',
     'name': 'mrkvovy_dort',
     'password': 'rohliksmaslem'
 }
 ```
 
+### Adding
+
+In order to add anytning, user **must** be admin. Then they must say what entity are they adding.
 

@@ -3,15 +3,17 @@
 namespace App;
 
 use App\Handlers\AuthHandler;
+use App\Handlers\AddHandler;
 use Workerman\Connection\ConnectionInterface;
 
 class EventHandler
 {
     private array $handlers = [
         'auth' => AuthHandler::class,
+        'add' => AddHandler::class,
     ];
 
-
+    /** @property array<string, Connectable> $connections*/
     private array $connections = [];
 
     public function __construct(

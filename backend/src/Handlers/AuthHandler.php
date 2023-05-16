@@ -30,9 +30,6 @@ class AuthHandler implements Handler
     public function handleUserConnection(ConnectionInterface $connection, Message $message, array &$connections): void
     {
         $token = $connection->token;
-        if (!array_key_exists($token, $connections)) {
-            throw new SkillIssue('Invalid token');
-        }
 
         $user = $this->orm->getORM()->getRepository(User::class)->findOne(['name' => $message->get('name')]);
 
@@ -50,10 +47,7 @@ class AuthHandler implements Handler
 
     public function handleUnitConnection(ConnectionInterface $connection, Message $message, array &$connections): void
     {
-         $token = $message->get('token');
-        if (!isset($connections[$token])) {
-            throw new SkillIssue('Invalid token');
-        }
+        $token = $connection->token;
 
         $unit = $this->orm->getORM()->getRepository(Unit::class)->findByPK($message->get('id'));
 

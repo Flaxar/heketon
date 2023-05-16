@@ -7,6 +7,7 @@ namespace App\Entities;
 use App\Entities\Traits\Dynamic;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
 
 #[Entity]
 class UnitRole
@@ -18,7 +19,11 @@ class UnitRole
 
     public function __construct(
         #[Column(type: 'string')]
-        public int $role
+        public int $role,
+        #[ManyToMany(target: Unit::class, though: UnitRole::class)]
+        public Unit $unit,
+        #[ManyToMany(target: User::class, though: UnitRole::class)]
+        public User $user,
     ) {
 
     }
