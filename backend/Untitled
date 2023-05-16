@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Entities;
+namespace App\Handlers;
 
-interface Connectable
+class ReadHandler
 {
 }

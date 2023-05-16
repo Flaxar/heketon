@@ -20,7 +20,7 @@ class Window
     public function __construct(
         #[BelongsTo(target: Unit::class, nullable: false)]
         public Unit $unit,
-        #[Column(type: 'bool')]
+        #[Column(type: 'boolean')]
         public bool $state,
     ) {
 
