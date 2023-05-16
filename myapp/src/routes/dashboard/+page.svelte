@@ -76,14 +76,15 @@
             <p class="card-text">Teplota: {getTemp()}</p>
             <p class="card-text">Cílová teplota: 21˚C</p>
             <p class="card-text">Doba větrání: {getWindowOpenDuration()}</p>
-            <p class="card-text">Intenzita světla: {getWindowOpenDuration()}</p>
+            <p class="card-text">Intenzita světla: {getLightIntensity()}</p>
             <p class="card-text">Osob v kanceláři: {getPeopleCount()}</p>
         </div>
     </div>
     <div class="card m-3" style="width:40%;">
         <img src="/temp_graph.png" class="card-img-top" style="">
     </div>
-    <div class="card m-3" style="width:25%;">
+    <div class="card m-3 justify-content-center align-items-center" style="width:20%;">
+        <p class="mb-4" style="font-size: 24px; font-weight: bold;">Doba větrání</p>
         <img src="/window_graph.png" class="card-img-top" style="">
     </div>
     
