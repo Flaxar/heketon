@@ -2,26 +2,38 @@
 
 namespace App;
 
-use App\Handlers\Handler;
+use App\Handlers\AuthHandler;
 use Workerman\Connection\ConnectionInterface;
 
 class EventHandler
 {
     private array $handlers = [
-        'auth' => AuthHandler::class
+        'auth' => AuthHandler::class,
     ];
 
+
     private array $connections = [];
+
+    public function __construct(
+        private ORM $orm,
+    ) {
+
+    }
 
     public function handleIncomming(ConnectionInterface $connection, string $data): void
     {
         $handler = $this->getHandler($connection, $data);
         if ($handler === null) {
+            $connection->send(json_encode(['status' => 0, 'error' => 'Invalid type']));
             return;
         }
 
         [$handler, $message] = $handler;
-        $handler->handle($connection, $message, $this->connections);
+        try {
+            $handler->handle($connection, $message, $this->connections);
+        } catch (\Throwable $e) {
+            $connection->send(json_encode(['status' => 0, 'error' => $e->getMessage()]));
+        }
     }
 
     public function handleConnection(ConnectionInterface $connection): void
@@ -31,7 +43,7 @@ class EventHandler
         $this->connections[$token] = null;
     }
 
-    public function getHandler(ConnectionInterface $connection, string $data): ?array
+    public function getHandler(string $data): ?array
     {
         $message = json_decode($data, true);
         $type = $message['type'];
@@ -40,13 +52,13 @@ class EventHandler
         }
 
         if (is_string($this->handlers[$type])) {
-            $this->handlers[$type] = new $this->handlers[$type]($connection, $message);
+            $this->handlers[$type] = new $this->handlers[$type]($this->orm);
         }
 
-        return [$this->handlers[$type], $message];
+        return [$this->handlers[$type], new Message($message)];
     }
 
-    private function verify(array $message): true
+    private function verify(array $message): bool 
     {
         $state = false;
         if ($message['type'] === 'auth') {
