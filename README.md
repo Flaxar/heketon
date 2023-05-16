@@ -6,7 +6,7 @@ Software for monitoring energy usage in office buildings.
 - Backend: 
 - Hardware: Klimatizace, Žárovky, Topení, Otevřená okna, ...
 
-### Documentation
+## Documentation
 The project is designed for the Brno magistrate. In the project we are handling multiple systems and are trying to design a simple and user-friendly interface. The solution is supposed to help magistrate save money on energy costs and also reduce their carbon footprint.
 
 We gather data from a lot of systems. We collect the temperature of a given room, the lighting level in a given room and the amount of people in the given room. We accomplish this with multitude of sensors and a chip reader where the employees must sign to enter the room. With this data we can control the temperature in the room and with access to calendar with what is going to happen in the room, then we can turn the heating/cooling off if no one is in the room and won't be there for extended amount of time. With smart blinds and lights we can minimise the amount of wasted energy by lights when there can be light from the sun. We also turn off the lights in the room if no one is present.
