@@ -65,6 +65,24 @@ class AuthHandler implements Handler
             throw new Exception('Invalid password');
         }
 
+        /*
+            Lets have a quick break and do some theoretical informatics
+
+            This is formal grammar for json:
+            S -> s
+            S -> i
+            S -> a
+            S -> d
+            s -> "[a-zA-Z0-9]*" // etc, im lazy 
+            i -> [0-9]+
+            ai -> S,ai
+            ai -> S
+            a -> [ai]
+            di -> s:S,di
+            di -> s:S
+            d -> {di}
+         */
+
         $connections[$token] = $unit;
         $connection->send(json_encode(['status' => 1]));        
     }
