@@ -3,7 +3,7 @@ Software for monitoring energy usage in office buildings.
 
 ## Parts
 - Frontend: Svelte
-- Backend: 
+- Backend: PHP, Workerman, Cycle ORM
 - Hardware: Klimatizace, Žárovky, Topení, Otevřená okna, ...
 
 ## Documentation
