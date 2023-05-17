@@ -14,6 +14,7 @@ $client->send(json_encode([
         'people' => 3
     ]
 ]));
+echo $client->receive();
 $client->close();
 $client = new WebSocket\Client("ws://localhost:8000");
 $client->send(json_encode(['type' => 'auth', 'as' => 'unit', 'id' => 1, 'password' => 'parek']));

@@ -19,7 +19,7 @@ class EventHandler
     private array $connections = [];
 
     public function __construct(
-        private ORM $orm,
+        private Config $config,
     ) {
     }
 
@@ -37,8 +37,8 @@ class EventHandler
             return;
         }
         try {
+            // a tak besnim jako drabec lesni masozravec vesmir
             $handler->handle($connection, $message, $this->connections);
-            $this->orm->getORM()->getHeap()->clean();
         } catch (SkillIssue $e) {
             $connection->send(json_encode(['status' => 0, 'error' => $e->getMessage()]));
         }
@@ -63,11 +63,7 @@ class EventHandler
             return null;
         }
 
-        if (is_string($this->handlers[$type])) {
-            $this->handlers[$type] = new $this->handlers[$type]($this->orm);
-        }
-
-        return [$this->handlers[$type], new Message($message)];
+        return [new $this->handlers[$type](new ORM($this->config)), new Message($message)];
     }
 
     private function verify(ConnectionInterface $connection, array $message): bool 

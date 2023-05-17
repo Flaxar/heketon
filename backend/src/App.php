@@ -16,8 +16,7 @@ class App
         $host = sprintf('websocket://%s:%d', $this->config->host, $this->config->port);
         $worker = new Worker($host);
 
-        $orm = new ORM($this->config);
-        $eventHandler = new EventHandler($orm);
+        $eventHandler = new EventHandler($this->config);
         $worker->onConnect = $eventHandler->handleConnection(...);
 
         $worker->onMessage = $eventHandler->handleIncomming(...); 

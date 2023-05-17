@@ -18,9 +18,9 @@ class Temperature
     public int $id;
 
     public function __construct(
-        #[BelongsTo(target: Unit::class, nullable: false)]
+        #[BelongsTo(target: Unit::class)]
         public Unit $unit,
-        #[Column(type: 'int')]
+        #[Column(type: 'integer')]
         public int $value,
     ) {
 

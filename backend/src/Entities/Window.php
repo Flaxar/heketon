@@ -18,7 +18,7 @@ class Window
     public int $id;
 
     public function __construct(
-        #[BelongsTo(target: Unit::class, nullable: false)]
+        #[BelongsTo(target: Unit::class)]
         public Unit $unit,
         #[Column(type: 'boolean')]
         public bool $state,

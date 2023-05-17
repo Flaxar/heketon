@@ -19,13 +19,13 @@ class Unit
     public int $id;
 
     #[HasOne(target: Temperature::class)]
-    protected ?Temperature $temperature;
+    public ?Temperature $temperature;
 
     #[HasMany(target: Window::class)]
-    protected array $windows = [];
+    public array $windows = [];
 
     #[HasMany(target: Light::class)]
-    protected array $lights = [];
+    public array $lights = [];
 
     #[Column(type: 'string')]
     public string $password;
@@ -34,7 +34,7 @@ class Unit
         #[Column(type: 'string')]
         public string $name,
         string $password,
-        #[Column(type: 'int')]
+        #[Column(type: 'integer')]
         public int $people,
     ) {
         $this->password = password_hash($password, PASSWORD_DEFAULT);

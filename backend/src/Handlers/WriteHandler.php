@@ -35,7 +35,8 @@ class WriteHandler implements Handler
             $what = $message->get('measured');
             $data = $message->get('data');
             try {
-                $unit->{'set'.(ucfirst($what))}(...$data);
+                $user->{'set'.(ucfirst($what))}(...$data);
+                $this->orm->getEntityManager()->persist($unit)->run();
             } catch (Throwable $e) {
                 throw new SkillIssue('bad data idk');
             }
@@ -55,6 +56,7 @@ class WriteHandler implements Handler
             if ($model instanceof Unit && $model->id === $unit) {
                 $model->{'set'.(ucfirst($what))}(...$data);
                 $connections[$token][1]->send(json_encode($message->data));
+                $this->orm->getEntityManager()->persist($unit)->run();
                 return;
             }
         }

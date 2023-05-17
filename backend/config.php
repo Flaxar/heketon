@@ -18,6 +18,7 @@ return new Config(
                     database: Env::get('DB_FILE'),
                 ),
                 queryCache: true,
+                reconnect: true,
             ),
         ],
     ],

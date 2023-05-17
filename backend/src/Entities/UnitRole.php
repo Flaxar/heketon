@@ -18,7 +18,7 @@ class UnitRole
     public int $id;
 
     public function __construct(
-        #[Column(type: 'string')]
+        #[Column(type: 'integer')]
         public int $role,
         #[ManyToMany(target: Unit::class, though: UnitRole::class)]
         public Unit $unit,
