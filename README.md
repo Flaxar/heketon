@@ -1,5 +1,5 @@
 # Heketon
-Software for monitoring energy usage in office buildings. 
+Software for monitoring and managing heating/cooling and lighting in office space.
 
 ## Parts
 - Frontend: Svelte
@@ -9,7 +9,7 @@ Software for monitoring energy usage in office buildings.
 ## Documentation
 The project is designed for the Brno magistrate. In the project we are handling multiple systems and are trying to design a simple and user-friendly interface. The solution is supposed to help magistrate save money on energy costs and also reduce their carbon footprint.
 
-Hardwar, který by byl použit pro chlazení a vytápění, pro nás skutečně není důležitý a můžeme pracovat s jakýmkoli typem systému pro vytápění a chlazení a integrovat jej do našeho softwaru. Přesto věříme, že pro magistrát by byla nejlepší tepelná čerpadla. Potřebovali by pouze jeden systém pro chlazení a vytápění, a tím by byl software mnohem přehlednější. A toto řešení patří mezi nejlepší pro české klima.
+The hardware that would be used for the cooling and heating does not really matter to us and we can work with any type of heating and cooling system and integrate it to our system. Although we believe that for magistrate the heat pump would be the best. They would only need one system for cooling and for heating and therefore the software would be way less cluttered. And this type of solution is one of the best for the Czech climate.
 
 We gather data from a lot of systems. We collect the temperature of a given room, the lighting level in a given room and the amount of people in the given room. We accomplish this with multitude of sensors and a chip reader where the employees must sign to enter the room. With this data we can control the temperature in the room and with access to calendar with what is going to happen in the room, then we can turn the heating/cooling off if no one is in the room and won't be there for extended amount of time. With smart blinds and lights we can minimise the amount of wasted energy by lights when there can be light from the sun. We also turn off the lights in the room if no one is present.
 
