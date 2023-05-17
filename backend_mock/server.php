@@ -23,3 +23,5 @@ $worker->onMessage = function ($connection, $data) {
         return;
     }
 };
+
+Worker::runAll();
