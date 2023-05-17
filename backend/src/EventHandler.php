@@ -4,6 +4,7 @@ namespace App;
 
 use App\Handlers\AuthHandler;
 use App\Handlers\AddHandler;
+use App\Handlers\WriteHandler;
 use Workerman\Connection\ConnectionInterface;
 
 class EventHandler
@@ -11,9 +12,10 @@ class EventHandler
     private array $handlers = [
         'auth' => AuthHandler::class,
         'add' => AddHandler::class,
+        'write' => WriteHandler::class,
     ];
 
-    /** @property array<string, Connectable> $connections*/
+    /** @property array<string, {0: User|Unit, 1: ConnectionInterface}> $connections*/
     private array $connections = [];
 
     public function __construct(
@@ -42,7 +44,7 @@ class EventHandler
     {
         // fido time
         $token = sha1(random_bytes(1024));
-        $this->connections[$token] = null;
+        $this->connections[$token] = [null, $connection];
         $connection->token = $token;
     }
 
@@ -75,11 +77,7 @@ class EventHandler
             $state = false;
         }
 
-        if (!isset($this->connections[$connection->token])) {
-            $state = false;
-        }
-
-        if ($this->connections[$connections->token] === null) {
+        if (!isset($this->connections[$connection->token][0])) {
             $state = false;
         }
 

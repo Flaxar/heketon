@@ -27,7 +27,7 @@ class AddHandler implements Handler
     {
         $token = $connection->token;
 
-        $user = $connections[$token];
+        $user = $connections[$token][0];
         if (!($user instanceof \App\Entities\User)) {
             throw new SkillIssue('User is probably unit, how can possibly unit which is literaly just python firmware in some funny quartz block add entity');
         }
@@ -42,10 +42,10 @@ class AddHandler implements Handler
 
         try {
             $object = new $entity(...$message->get('data'));
-        } catch (\TypeError $e) {
+        } catch (\Throwable $e) {
             throw new SkillIssue('Invalid data');
         }
 
-        $this->orm->getEntityManager()->persist($object);
+        $this->orm->getEntityManager()->persist($object)->run();
     }
 }

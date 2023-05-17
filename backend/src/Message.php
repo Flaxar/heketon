@@ -14,7 +14,7 @@ class Message
     {
         return $this->data[$key] 
             ?? ($default === null 
-                ? throw new \Exception("Key $key not found") 
+                ? throw new SkillIssue("Key $key not found") 
                 : $default
             );
     }

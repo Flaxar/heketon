@@ -19,25 +19,32 @@ class Unit
     public int $id;
 
     #[HasOne(target: Temperature::class)]
-    public Temperature $temperature;
+    protected ?Temperature $temperature;
 
     #[HasMany(target: Window::class)]
-    public array $windows;
+    protected array $windows = [];
 
     #[HasMany(target: Light::class)]
-    public array $lights;
+    protected array $lights = [];
+
+    #[Column(type: 'string')]
+    public string $password;
 
     public function __construct(
         #[Column(type: 'string')]
         public string $name,
+        string $password,
         #[Column(type: 'int')]
         public int $people,
     ) {
-
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function setTemperature(int $temperature): self 
     {
+        if (!isset($this->temperature)) {
+            $this->temperature = new Temperature();
+        }
         $this->temperature->value = $temperature;
         return $this;
     }

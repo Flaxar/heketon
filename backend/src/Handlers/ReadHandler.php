@@ -11,7 +11,7 @@ use App\Entities\Light;
 use App\Entities\Window;
 use Workerman\Connection\ConnectionInterface;
 
-class ReadHandler extends Handler
+class ReadHandler implements Handler
 {
     public const Measured = [
         'temperature' => Temperature::class,

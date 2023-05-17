@@ -10,7 +10,18 @@ $client->send(json_encode([
     'entity' => 'unit',
     'data' => [
         'name' => 'curakov',
+        'password' => 'parek',
         'people' => 3
     ]
 ]));
+//$client->send(json_encode(['type' => 'auth', 'as' => 'unit', 'id' => 1, 'password' => 'parek']));
+//echo $client->receive();
+//$client->send(json_encode([
+//    'type' => 'write',
+//    'measured' => 'temperature',
+//    'data' => [
+//        'value' => 69,
+//    ] 
+//]));
+echo $client->receive();
 $client->close();

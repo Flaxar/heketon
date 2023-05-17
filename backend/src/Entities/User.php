@@ -18,16 +18,29 @@ class User
     public int $id;
 
     #[HasMany(target: UnitRole::class)]
-    public array $roles;
+    protected array $roles = [];
+
+    #[Column(type: 'string')]
+    public string $password;
 
     public function __construct(
         #[Column(type: 'string')]
         public string $name,
-        #[Column(type: 'string')]
-        public string $password,
+        string $password,
         #[Column(type: 'boolean')]
         public int $admin,
     ) {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
+    }
 
+    public function can(int $unit, int $role): bool
+    {
+        foreach ($this->roles as $unitRole) {
+            if ($unitRole->unit->id === $unit && $unitRole->role === $role) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -41,7 +41,7 @@ class AuthHandler implements Handler
             throw new SkillIssue('Invalid password');
         }
 
-        $connections[$token] = $user;
+        $connections[$token][0] = $user;
         $connection->send(json_encode(['status' => 1]));
     }
 
@@ -49,7 +49,7 @@ class AuthHandler implements Handler
     {
         $token = $connection->token;
 
-        $unit = $this->orm->getORM()->getRepository(Unit::class)->findByPK($message->get('id'));
+        $unit = $this->orm->getORM()->getRepository(Unit::class)->findByPK((int) $message->get('id'));
 
         if ($unit === null) {
             throw new SkillIssue('Invalid id');
@@ -77,7 +77,7 @@ class AuthHandler implements Handler
             d -> {di}
          */
 
-        $connections[$token] = $unit;
+        $connections[$token][0] = $unit;
         $connection->send(json_encode(['status' => 1]));        
     }
 }
