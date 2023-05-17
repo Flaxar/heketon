@@ -17,7 +17,7 @@ $worker->onMessage = function ($connection, $data) {
     if ($message['from'] === 'hardware') {
         foreach ($connection->worker->connections as $clientConnection) {
             if ($clientConnection->id !== $connection->id) {
-                $clientConnection->send($message['data']);
+                $clientConnection->send(json_encode($message['data']));
             }
         }
         return;
