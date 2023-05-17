@@ -1,0 +1,17 @@
+{
+    "require": {
+        "workerman/workerman": "^4.1",
+        "cycle/orm": "^2.3",
+        "cycle/annotated": "^3.3",
+        "doctrine/annotations": "^1.14.3",
+        "illuminate/container": "^10.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require-dev": {
+        "textalk/websocket": "^1.6"
+    }
+}
