@@ -45,15 +45,7 @@ class AddHandler implements Handler
         } catch (\Throwable $e) {
             throw new SkillIssue('Invalid data');
         }
-
-        // Notes of pure pain
-        // by Majkel (2021-05-17 3:57)
-        // ok so I just wanted to say that its in hajzl
-        // like normalne v hajzlu
-        // proste nevim, neumim moc s databazema jak se ukazuje a je to na hovno, protoze to proste neuklada
-        // nevim jak to udelat a uz to nezvladam
-        // pokud toto dokoncim tak nevim
-        
+       
         $this->orm->getEntityManager()->persist($object)->run();
         $connection->send(json_encode(['status' => 1]));
     }

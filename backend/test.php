@@ -7,25 +7,25 @@ $client->send(json_encode(['type' => 'auth', 'as' => 'user', 'name' => 'majkel',
 echo $client->receive();
 $client->send(json_encode([
     'type' => 'add',
-    'entity' => 'unit',
+    'entity' => 'user',
     'data' => [
-        'name' => 'curakov',
+        'name' => 'ok',
         'password' => 'parek',
-        'people' => 3
+        'admin' => true,
     ]
 ]));
 echo $client->receive();
-$client->close();
-$client = new WebSocket\Client("ws://localhost:8000");
-$client->send(json_encode(['type' => 'auth', 'as' => 'unit', 'id' => 1, 'password' => 'parek']));
-echo $client->receive();
-$client->send(json_encode([
-    'type' => 'write',
-    'unit' => 1,
-    'measured' => 'temperature',
-    'data' => [
-        'value' => 69,
-    ] 
-]));
-echo $client->receive();
+//$client->close();
+//$client = new WebSocket\Client("ws://localhost:8000");
+//$client->send(json_encode(['type' => 'auth', 'as' => 'unit', 'id' => 1, 'password' => 'parek']));
+//echo $client->receive();
+//$client->send(json_encode([
+//    'type' => 'write',
+//    'unit' => 1,
+//    'measured' => 'temperature',
+//    'data' => [
+//        'value' => 69,
+//    ] 
+//]));
+//echo $client->receive();
 $client->close();
