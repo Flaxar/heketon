@@ -18,18 +18,19 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-
     
+    var temp;
+
+    const socket = new WebSocket('ws://sem-prijde-adresa');
+    socket.addEventListener('message', function (event) {
+        temp = JSON.parse(event.data).temp;
+    });
 
     function getName() {
         // TODO: from api
         return "Blakub Jaha"
     }
-
-    
-    function getTemp() {
-        return "24˚C";
-    }
+ 
 
     let targetTemp = 21.0;
     function plusTargetTemp() {
@@ -92,7 +93,7 @@
         <img src="https://t3.ftcdn.net/jpg/04/67/21/78/360_F_467217883_i7jomoE1G0GmW2CPB2aDmJVWIyN32hCR.jpg" class="card-img-top">
         <div class="card-body">
             <p style="font-size: 24px; font-weight: bold;">Aktuální informace</p>
-            <p class="card-text">Teplota: {getTemp()}</p>
+            <p class="card-text">Teplota: {temp}</p>
             <p class="card-text">Cílová teplota: {targetTemp}˚C</p>
             <div class="pb-4">
                 <button class="btn btn-secondary" style="background-color:cornflowerblue" on:click={minusTargetTemp}>
