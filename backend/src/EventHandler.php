@@ -15,13 +15,12 @@ class EventHandler
         'write' => WriteHandler::class,
     ];
 
-    /** @property array<string, {0: User|Unit, 1: ConnectionInterface}> $connections*/
+    /** @property array<string, {0: ?User|?Unit, ConnectionInterface}> $connections*/
     private array $connections = [];
 
     public function __construct(
         private ORM $orm,
     ) {
-
     }
 
     public function handleIncomming(ConnectionInterface $connection, string $data): void
@@ -33,8 +32,13 @@ class EventHandler
         }
 
         [$handler, $message] = $handler;
+        if (!$this->verify($connection, $message->data)) {
+            $connection->send(json_encode(['status' => 0, 'error' => 'Unverified']));
+            return;
+        }
         try {
             $handler->handle($connection, $message, $this->connections);
+            $this->orm->getORM()->getHeap()->clean();
         } catch (SkillIssue $e) {
             $connection->send(json_encode(['status' => 0, 'error' => $e->getMessage()]));
         }
@@ -66,21 +70,16 @@ class EventHandler
         return [$this->handlers[$type], new Message($message)];
     }
 
-    private function verify(array $message): bool 
-    {
-        $state = false;
+    private function verify(ConnectionInterface $connection, array $message): bool 
+    { 
+        if ($this->connections[$connection->token][0] !== null) { 
+            return true;
+        }
+
         if ($message['type'] === 'auth') {
-            $state = true;
+            return true;
         }
 
-        if (!isset($connection->token)) {
-            $state = false;
-        }
-
-        if (!isset($this->connections[$connection->token][0])) {
-            $state = false;
-        }
-
-        return $state;
+        return false;
     }
 }

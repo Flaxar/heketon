@@ -10,6 +10,7 @@ use Cycle\Database\DatabaseManager;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Factory;
+use Cycle\ORM\Heap\Heap;
 use Cycle\ORM\ORM as CycleORM;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\Schema as ORMSchema;
